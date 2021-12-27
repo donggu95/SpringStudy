@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<typeAliases>
+		<typeAlias type="com.koreait.mvc1223.domain.Notice" alias="Notice"/>
+		<typeAlias type="com.koreait.mvc1223.domain.Board" alias="Board"/>
+	</typeAliases>
+  
+  <mappers>
+    <mapper resource="com/koreait/mvc1223/mybatis/NoticeMapper.xml"/>
+    <mapper resource="com/koreait/mvc1223/mybatis/BoardMapper.xml"/>
+  </mappers>
+
+</configuration>
