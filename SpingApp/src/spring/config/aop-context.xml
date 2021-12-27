@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+
+
+	<!-- Bell 빈이 Student를 바라보다가 원하는 시점에 관여할 수 있는 관점으로 정의하겠다.
+		이 기술을 가리켜 AOP(=관점 지향 프로그래밍)라고 한다.  
+	-->
+	<bean class="school.Bell" id="bell"/>
+	
+	<aop:config>
+		<aop:aspect id="bellAspect" ref="bell">
+			<aop:pointcut expression="execution(public * school..*(..))" id="studentCut"/>
+			<aop:before method="sound" pointcut-ref="studentCut"/>
+		</aop:aspect>
+	</aop:config>
+	
+	<bean class="school.Student" id="student"/>
+	
+</beans>
