@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Notice">
+	
+	<!-- 공통쿼리 -->
+	<sql id="selectCommon">
+		select notice_id, title, writer, content, regdate, hit, filename from notice
+	</sql>
+	
+	<!-- 목록가져오기 -->
+	<select id="selectAll" resultType="Notice">
+		<include refid="selectCommon"/>
+		order by notice_id desc
+	</select>
+	
+	<!-- 한건 가져오기 -->
+	<select id="select" resultType="Notice">
+		<include refid="selectCommon"/>
+		where notice_id=#{notice_id}
+	</select>
+	
+	<!-- 한건 넣기  -->
+	<insert id="insert" parameterType="Notice">
+		insert into notice(notice_id, title, writer, content, filename)
+		values(seq_notice.nextval, #{title},#{writer},#{content}, #{filename})
+	</insert>
+		
+	<!-- 한건 수정  -->
+	<update id="update" parameterType="Notice">
+		update notice set title=#{title}, writer=#{writer}, content=#{content}, filename=#{filename}
+		where notice_id=#{notice_id}
+	</update>
+	
+	<!-- 한건 삭제  -->
+	<delete id="delete" parameterType="int">
+		delete from notice where notice_id=#{notice_id} 
+	</delete>
+		
+</mapper>
+

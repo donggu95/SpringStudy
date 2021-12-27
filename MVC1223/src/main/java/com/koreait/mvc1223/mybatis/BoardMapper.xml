@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Board">
+
+	<!-- 원글등록 -->
+	<insert id="insert" parameterType="Board">
+		insert into board(board_id, title, writer, content, team)
+		values(seq_board.nextval, #{title}, #{writer},#{content}, seq_board.nextval)
+	</insert>
+	
+	<!-- 목록 가져오기 -->
+	<select id="selectAll" resultType="Board">
+		select * from board order by team desc, step asc
+	</select>
+
+	<!-- 상세보기 -->
+	<select id="select" parameterType="int" resultType="Board">
+		select * from board where board_id=#{board_id}
+	</select>
+
+	<!-- 수정  -->
+	<update id="update" parameterType="Board">
+		update board set title=#{title}, writer=#{writer}, content=#{content} where board_id=#{board_id}
+	</update>
+	
+	<!-- 삭제 -->
+	<delete id="delete">
+		delete from board where board_id=#{board_id}
+	</delete>		
+	
+	<!-- 답변 관련  -->
+	
+	<!-- 답변이 들어갈 자리 확보 -->
+	<update id="updateStep" parameterType="Board">
+		<selectKey order="BEFORE" keyColumn="step" resultType="int" keyProperty="step">
+			<![CDATA[
+			select max(step) as step from board
+			where team=#{team} and depth=#{depth}+1
+			and step > #{step}
+			]]>
+		</selectKey>
+		<![CDATA[
+			update  board  set  step=step+1 
+			where  team=#{team} and step > 
+			(
+				select max(step) from board 
+				where team=#{team} and depth=#{depth}+1
+				and step > #{step}
+			)
+		]]>
+	</update>
+	
+	<!-- 답변 insert  -->
+	<insert id="replyInsert" parameterType="Board">
+		insert into board(board_id, title, writer, content, team,step, depth)
+		values(seq_board.nextval, #{title}, #{writer},#{content}, #{team}, #{step}+1, #{depth}+1)
+	</insert>
+			
+</mapper>
+
+
+
+
