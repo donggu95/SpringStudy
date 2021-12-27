@@ -1,0 +1,21 @@
+#공백주의
+# 동생 컨트롤러 매핑 
+/blood.do=com.koreait.mvc.controller.blood.BloodController
+/movie.do=com.koreait.mvc.controller.movie.MovieController
+
+/notice/list.do=com.koreait.mvc.controller.notice.ListController
+/notice/regist.do=com.koreait.mvc.controller.notice.RegistController
+/notice/detail.do=com.koreait.mvc.controller.notice.DetailController
+
+# 보여줄 뷰 매핑 
+/result/blood=/blood/result.jsp
+/result/movie=/movie/result.jsp
+/result/notice=/notice/list.jsp
+/result/notice/regist=/notice/list.do
+/result/notice/detail=/notice/detail.jsp
+/result/notice/delete=/notice/list.do
+/result/notice/detail=/notice/detail.jsp
+
+
+
+/result/dept/list=/dept/list.jsp
